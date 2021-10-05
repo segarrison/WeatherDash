@@ -91,30 +91,16 @@ function handleSearchFormSubmit(event) {
     return;
   }
   if (savedCities.includes(searchInputVal)) {
-    // for (var i = 0; i < savedCities.length; i++) {
-    //   var historyButtons = document.createElement("button");
-    //   historyButtons.setAttribute("class", "btn btn-info btn-block");
-    //   historyButtons.innerText = savedCities[i];
-    //   searchBlockEl.append(historyButtons);
-    // }
-    // searchApi(searchInputVal);
   } else {
     savedCities.push(searchInputVal);
     localStorage.setItem("cities", JSON.stringify(savedCities));
-    // for (var i = 0; i < savedCities.length; i++) {
-    //   var historyButtons = document.createElement("button");
-    //   historyButtons.setAttribute("class", "btn btn-info btn-block");
-    //   historyButtons.innerText = savedCities[i];
-    //   searchBlockEl.append(historyButtons);
-    // }
-    // searchApi(searchInputVal);
-  }
-  for (var i = 0; i < savedCities.length; i++) {
+
     var historyButtons = document.createElement("button");
     historyButtons.setAttribute("class", "btn btn-info btn-block");
-    historyButtons.innerText = savedCities[i];
+    historyButtons.innerText = searchInputVal;
     searchBlockEl.append(historyButtons);
   }
+
   searchApi(searchInputVal);
 }
 
