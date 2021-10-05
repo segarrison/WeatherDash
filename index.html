@@ -28,7 +28,7 @@
         min-100-vh
       "
     >
-      <div class="col-12 col-md-3 p-3">
+      <div class="col-12 col-md-3 p-3 border-bottom">
         <h1 class="text-primary">Search for a City:</h1>
         <form id="search-form" class="mb-2">
           <input
@@ -40,15 +40,9 @@
           <button class="btn btn-info btn-block">Search</button>
         </form>
       </div>
-      <div class="col-12 col-md-9 p-3" style="display: none">
+      <div class="col-12 col-md-9 p-3" id="bigBox" style="visibility: hidden">
         <div class="card" style="width: auto">
-          <div class="card-body">
-            <h1 class="card-title">Card title</h1>
-            <h5 class="card-subtitle mb-2">Card subtitle</h5>
-            <h5 class="card-subtitle mb-2">Card subtitle</h5>
-            <h5 class="card-subtitle mb-2">Card subtitle</h5>
-            <h5 class="card-subtitle mb-2">Card subtitle</h5>
-          </div>
+          <div class="card-body" id="currentWeather"></div>
         </div>
         <div class="card-group">
           <div class="card">
@@ -104,7 +98,11 @@
         </div>
       </div>
     </div>
-
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="./assets/script.js"></script>
   </body>
 </html>
