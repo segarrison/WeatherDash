@@ -1,10 +1,13 @@
 var searchFormEl = document.querySelector("#search-form");
+var searchBlockEl = document.querySelector("#search-block");
 var cityName = document.createElement("h1");
 var bigBox = document.querySelector("#bigBox");
 var tempCurrentEl = document.createElement("h5");
 var humdCurrentEl = document.createElement("h5");
 var windCurrentEl = document.createElement("h5");
 var uviCurrentEl = document.createElement("h5");
+var savedCities = [];
+
 function searchApi(query) {
   console.log(query);
   var locQueryUrl =
@@ -87,7 +90,31 @@ function handleSearchFormSubmit(event) {
     console.error("You need a search input value!");
     return;
   }
-
+  if (savedCities.includes(searchInputVal)) {
+    // for (var i = 0; i < savedCities.length; i++) {
+    //   var historyButtons = document.createElement("button");
+    //   historyButtons.setAttribute("class", "btn btn-info btn-block");
+    //   historyButtons.innerText = savedCities[i];
+    //   searchBlockEl.append(historyButtons);
+    // }
+    // searchApi(searchInputVal);
+  } else {
+    savedCities.push(searchInputVal);
+    localStorage.setItem("cities", JSON.stringify(savedCities));
+    // for (var i = 0; i < savedCities.length; i++) {
+    //   var historyButtons = document.createElement("button");
+    //   historyButtons.setAttribute("class", "btn btn-info btn-block");
+    //   historyButtons.innerText = savedCities[i];
+    //   searchBlockEl.append(historyButtons);
+    // }
+    // searchApi(searchInputVal);
+  }
+  for (var i = 0; i < savedCities.length; i++) {
+    var historyButtons = document.createElement("button");
+    historyButtons.setAttribute("class", "btn btn-info btn-block");
+    historyButtons.innerText = savedCities[i];
+    searchBlockEl.append(historyButtons);
+  }
   searchApi(searchInputVal);
 }
 
