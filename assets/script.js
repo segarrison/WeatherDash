@@ -1,6 +1,10 @@
 var searchFormEl = document.querySelector("#search-form");
 var cityName = document.createElement("h1");
 var bigBox = document.querySelector("#bigBox");
+var tempCurrentEl = document.createElement("h5");
+var humdCurrentEl = document.createElement("h5");
+var windCurrentEl = document.createElement("h5");
+var uviCurrentEl = document.createElement("h5");
 function searchApi(query) {
   console.log(query);
   var locQueryUrl =
@@ -10,9 +14,7 @@ function searchApi(query) {
 
   fetch(locQueryUrl)
     .then(function (response) {
-      console.log(response);
       if (response.ok) {
-        console.log(response);
         response.json().then(function (data) {
           console.log(data);
           var latEl = data.coord.lat;
@@ -21,9 +23,7 @@ function searchApi(query) {
           var humdCurrent = data.main.humidity;
           var windCurrent = data.wind.speed;
           var icon = data.weather[0].icon;
-          var tempCurrentEl = document.createElement("h5");
-          var humdCurrentEl = document.createElement("h5");
-          var windCurrentEl = document.createElement("h5");
+
           var getIcon = "https://openweathermap.org/img/w/" + icon + ".png";
           console.log(getIcon);
           var makeIcon = document.createElement("img");
@@ -39,6 +39,8 @@ function searchApi(query) {
           currentWeather.append(tempCurrentEl);
           currentWeather.append(windCurrentEl);
           currentWeather.append(humdCurrentEl);
+
+          getForecast(latEl, lonEl);
         });
       }
     })
@@ -46,6 +48,34 @@ function searchApi(query) {
     .catch(function (error) {
       console.error(error);
     });
+}
+
+function getForecast(lat, lon) {
+  var locForecastUrl =
+    "http://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&exclude=minutely,hourly,alerts&appid=17b4a3b1911b868571e81a79dfde759e&units=imperial";
+
+  fetch(locForecastUrl).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+        var uviCurrent = data.current.uvi;
+        console.log(uviCurrent);
+        uviCurrentEl.innerText = "UV Index: " + uviCurrent;
+        if (uviCurrent <= 2) {
+          uviCurrentEl.style.backgroundColor = "green";
+        } else if (2 > uviCurrent < 6) {
+          uviCurrentEl.style.backgroundColor = "orange";
+        } else {
+          uviCurrentEl.style.backgroundColor = "red";
+        }
+        currentWeather.append(uviCurrentEl);
+      });
+    }
+  });
 }
 function handleSearchFormSubmit(event) {
   event.preventDefault();
