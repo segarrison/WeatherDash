@@ -67,7 +67,7 @@ function getForecast(lat, lon) {
         uviCurrentEl.innerText = "UV Index: " + uviCurrent;
         if (uviCurrent <= 2) {
           uviCurrentEl.style.backgroundColor = "green";
-        } else if (2 > uviCurrent < 6) {
+        } else if (2 < uviCurrent > 6) {
           uviCurrentEl.style.backgroundColor = "orange";
         } else {
           uviCurrentEl.style.backgroundColor = "red";
