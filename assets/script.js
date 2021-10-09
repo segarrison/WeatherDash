@@ -7,9 +7,10 @@ var humdCurrentEl = document.createElement("h5");
 var windCurrentEl = document.createElement("h5");
 var uviCurrentEl = document.createElement("h5");
 var savedCities = [];
+// var nameEl = document.createElement("h5");
 
 function searchApi(query) {
-  console.log(query);
+  // console.log(query);
   var locQueryUrl =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
     query +
@@ -19,13 +20,15 @@ function searchApi(query) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data);
+          // console.log(data);
           var latEl = data.coord.lat;
           var lonEl = data.coord.lon;
           var tempCurrent = data.main.temp;
           var humdCurrent = data.main.humidity;
           var windCurrent = data.wind.speed;
-          var icon = data.weather[0].icon;
+          var icon = data.weather[0].icon; // var name = data.businesses[i].name;
+          //nameEl.innertext = name;
+          //{idforelgoeshere}.append(nameEl);
 
           var getIcon = "https://openweathermap.org/img/w/" + icon + ".png";
           console.log(getIcon);
@@ -64,18 +67,19 @@ function getForecast(lat, lon) {
   fetch(locForecastUrl).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        console.log(data);
+        // console.log(data);
         var uviCurrent = data.current.uvi;
-        console.log(uviCurrent);
+        // console.log(uviCurrent);
         uviCurrentEl.innerText = "UV Index: " + uviCurrent;
-        if (uviCurrent <= 2) {
+        if (uviCurrent <= 2.0) {
           uviCurrentEl.style.backgroundColor = "green";
-        } else if (2 < uviCurrent > 6) {
+        } else if (uviCurrent > 2.0 && uviCurrent < 6.0) {
           uviCurrentEl.style.backgroundColor = "orange";
         } else {
           uviCurrentEl.style.backgroundColor = "red";
         }
         currentWeather.append(uviCurrentEl);
+        createForecast(data);
       });
     }
   });
@@ -84,7 +88,7 @@ function handleSearchFormSubmit(event) {
   event.preventDefault();
 
   var searchInputVal = document.querySelector("#search-input").value;
-  console.log(searchInputVal);
+  // console.log(searchInputVal);
 
   if (!searchInputVal) {
     console.error("You need a search input value!");
@@ -105,3 +109,23 @@ function handleSearchFormSubmit(event) {
 }
 
 searchFormEl.addEventListener("submit", handleSearchFormSubmit);
+searchBlockEl.addEventListener("click", function (event) {
+  var searchInputVal = event.target.innerText;
+  // console.log(searchInputVal);
+  handleSearchFormSubmit();
+});
+
+function createForecast(data) {
+  // console.log(data);
+  for (let i = 1; i <= 6; i++) {
+    console.log(data.daily[i]);
+    var tempForecast = data.daily[i].temp.day;
+    console.log(tempForecast);
+    var windForecast = data.daily[i].wind_speed;
+    console.log(windForecast);
+    var humdForecast = data.daily[i].humidity;
+    console.log(humdForecast);
+    var iconForecast = data.daily[i].weather[0].icon;
+    console.log(iconForecast);
+  }
+}
