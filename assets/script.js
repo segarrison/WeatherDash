@@ -121,7 +121,7 @@ function createForecast(data) {
     forecastEl.removeChild(forecastEl.firstChild);
   }
   // console.log(data);
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 5; i++) {
     console.log(data.daily[i]);
     var tempForecast = data.daily[i].temp.day;
 
@@ -135,6 +135,7 @@ function createForecast(data) {
     forecastCard.classList.add("card");
     var forecastBody = document.createElement("div");
     forecastBody.classList.add("card-body");
+    forecastBody.style.backgroundColor = "PaleTurquoise";
     var forecastDate = document.createElement("h3");
     current = moment();
     date = current.add(i, "days").format("L");
