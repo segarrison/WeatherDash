@@ -7,6 +7,7 @@ var humdCurrentEl = document.createElement("h5");
 var windCurrentEl = document.createElement("h5");
 var uviCurrentEl = document.createElement("h5");
 var savedCities = [];
+var forecastEl = document.querySelector("#forecastCards");
 // var nameEl = document.createElement("h5");
 
 function searchApi(query) {
@@ -116,16 +117,47 @@ searchBlockEl.addEventListener("click", function (event) {
 });
 
 function createForecast(data) {
+  while (forecastEl.firstChild) {
+    forecastEl.removeChild(forecastEl.firstChild);
+  }
   // console.log(data);
   for (let i = 1; i <= 6; i++) {
     console.log(data.daily[i]);
     var tempForecast = data.daily[i].temp.day;
-    console.log(tempForecast);
+
     var windForecast = data.daily[i].wind_speed;
-    console.log(windForecast);
+
     var humdForecast = data.daily[i].humidity;
-    console.log(humdForecast);
+
     var iconForecast = data.daily[i].weather[0].icon;
-    console.log(iconForecast);
+
+    var forecastCard = document.createElement("div");
+    forecastCard.classList.add("card");
+    var forecastBody = document.createElement("div");
+    forecastBody.classList.add("card-body");
+    var forecastDate = document.createElement("h3");
+    current = moment();
+    date = current.add(i, "days").format("L");
+    forecastDate.innerText = date;
+    var getIcon = "https://openweathermap.org/img/w/" + iconForecast + ".png";
+    console.log(getIcon);
+    var makeIcon = document.createElement("img");
+    makeIcon.src = getIcon;
+    var forecastTempEl = document.createElement("p");
+    forecastTempEl.innerText = "Temp: " + tempForecast + " °F";
+    var forecastWindEl = document.createElement("p");
+    forecastWindEl.innerText = "Wind: " + windForecast + " MPH";
+    var forecastHumdEl = document.createElement("p");
+    forecastHumdEl.innerText = "Humidity: " + humdForecast + "%";
+
+    forecastEl.append(forecastCard);
+    forecastCard.append(forecastBody);
+    forecastBody.append(
+      forecastDate,
+      makeIcon,
+      forecastTempEl,
+      forecastWindEl,
+      forecastHumdEl
+    );
   }
 }
